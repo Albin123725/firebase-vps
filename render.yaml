@@ -1,139 +1,19 @@
-# render.yaml
 services:
-  # Main Web Service for Panel
+  # Main Distributed Minecraft Service
   - type: web
-    name: distributed-minecraft-panel
+    name: distributed-minecraft
     env: docker
     plan: free
-    dockerfilePath: ./Dockerfile.panel
+    dockerfilePath: ./Dockerfile
     envVars:
+      - key: APP_URL
+        sync: false
       - key: RENDER_EXTERNAL_URL
         sync: false
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: distributed-redis
-          property: connectionString
     healthCheckPath: /health
     numInstances: 1
-    domains:
-      - distributed-minecraft.onrender.com
-
-  # Minecraft Gateway Service
-  - type: web
-    name: minecraft-gateway
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile.gateway
-    envVars:
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: distributed-redis
-          property: connectionString
-    ports:
-      - port: 25565
-        protocol: TCP
-    numInstances: 1
-
-  # AI Master Service
-  - type: web
-    name: ai-master
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile.ai
-    envVars:
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: distributed-redis
-          property: connectionString
-    numInstances: 1
-
-  # Chunk Service 1
-  - type: worker
-    name: chunk-processor-1
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile.chunk
-    envVars:
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: distributed-redis
-          property: connectionString
-      - key: PROCESSOR_ID
-        value: "1"
-    numInstances: 1
-
-  # Chunk Service 2
-  - type: worker
-    name: chunk-processor-2
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile.chunk
-    envVars:
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: distributed-redis
-          property: connectionString
-      - key: PROCESSOR_ID
-        value: "2"
-    numInstances: 1
-
-  # Entity Service
-  - type: worker
-    name: entity-processor
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile.entity
-    envVars:
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: distributed-redis
-          property: connectionString
-    numInstances: 1
-
-  # Physics Service
-  - type: worker
-    name: physics-engine
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile.physics
-    envVars:
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: distributed-redis
-          property: connectionString
-    numInstances: 1
-
-  # Chat Service
-  - type: worker
-    name: chat-processor
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile.chat
-    envVars:
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: distributed-redis
-          property: connectionString
-    numInstances: 1
-
-  # Redis Database
-  - type: redis
-    name: distributed-redis
-    plan: free
-    ipAllowList: []
-    maxmemoryPolicy: allkeys-lru
-
-databases:
-  # SQLite for Panel (if needed)
-  - name: panel-db
-    plan: free
-    databaseName: panel
-    ipAllowList: []
+    autoDeploy: true
+    disk:
+      name: minecraft-data
+      mountPath: /data
+      sizeGB: 1
