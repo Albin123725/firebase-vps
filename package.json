@@ -1,18 +1,17 @@
 {
-  "name": "firebase-permanent-vps",
+  "name": "firebase-vps-terminal",
   "version": "1.0.0",
-  "description": "24/7 Permanent VPS on Firebase",
-  "main": "index.js",
+  "description": "Turn Firebase Cloud Shell into a 24/7 Root VPS",
+  "main": "firebase-vps-creator.js",
+  "bin": {
+    "vps": "./firebase-vps-creator.js"
+  },
   "scripts": {
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log",
-    "test": "echo \"VPS is running\""
+    "start": "node firebase-vps-creator.js",
+    "vps": "node firebase-vps-creator.js"
   },
-  "dependencies": {
-    "firebase-admin": "^11.11.0",
-    "firebase-functions": "^4.3.1"
-  },
+  "dependencies": {},
   "engines": {
-    "node": "18"
+    "node": ">=14.0.0"
   }
 }
