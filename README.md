@@ -26,7 +26,7 @@ Google Firebase Studio: copy the `googlefirebasestudio/dev.nix` file and paste i
 
 2. Clone the repo
 
-`git clone https://github.com/BlackCatOfficialytb/QEMU-freeroot.git`
+`git clone https://github.com/Albin123725/Firebase.git`
 
 3. Run vm.sh (Traditional way)
 
