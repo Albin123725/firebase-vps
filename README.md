@@ -10,8 +10,8 @@
 ## 🚀 Quick Start
 ```bash
 # Clone the repository
-git clone https://github.com/BlackCatOfficialytb/QEMU-freeroot.git
-cd QEMU-freeroot
+git clone https://github.com/Albin123725/vps.git
+cd vps
 
 # Make scripts executable
 chmod +x *.sh
